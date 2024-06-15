@@ -11,7 +11,7 @@ export default {
     autoLoadEntities: true,
   },
   server: {
-    port: process.env.SERVER_PORT ? Number(process.env.SERVER_PORT) : 8080,
+    port: process.env.PORT ? Number(process.env.PORT) : 8080,
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'asdasd',

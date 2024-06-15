@@ -9,19 +9,20 @@ services:
       - $POSTGRES_DB
       - $POSTGRES_HOST
       - $POSTGRES_PORT
-    build:
-      context: .
-      dockerfile: docker/node.dockerfile
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+
     depends_on:
       - db
     ports:
       - 9229:9229
-      - ${SERVER_PORT}:${SERVER_PORT}
+      - ${PORT}:${PORT}
     expose:
-      - ${SERVER_PORT}
+      - ${PORT}
       - 9229
     volumes:
       - .:/var/www/nodeserver
+      - /app/node_modules/
+
     env_file:
       - .env
   db:

@@ -1,7 +1,10 @@
 FROM node:20
 WORKDIR "/var/www/nodeserver"
 COPY ./package.json ./package.json
-RUN yarn
+COPY ./yarn.lock ./yarn.lock
+
+RUN yarn --frozen-lockfile
+
 COPY . .
-RUN npm run-script build
+RUN yarn build
 ENTRYPOINT ["./start_server.sh"]

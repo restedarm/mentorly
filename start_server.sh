@@ -2,7 +2,7 @@
 
 if [[ ${NODE_ENV} == "production" ]] 
 then
-  npm run-script "start:prod"
+  yarn start:prod
 else
-  npm run-script "start:debug"
+  yarn start:debug
 fi
