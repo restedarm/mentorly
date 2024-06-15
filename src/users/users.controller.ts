@@ -16,20 +16,23 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserPublicDto } from './dto/user-public.dto';
 import { UsersService } from './users.service';
 import { UserSearchDto } from './dto/user-search.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiBody, ApiParam } from '@nestjs/swagger';
 
 @ApiTags('users')
-@Controller('/users')
+@ApiBearerAuth()
+@Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post()
+  @ApiBody({ type: CreateUserDto })
   async create(@Body() user: CreateUserDto): Promise<UserPublicDto> {
     return this.usersService.create(user);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('/profile')
+  @Patch('profile')
+  @ApiBody({ type: UpdateUserDto })
   async update(
     @Request() req,
     @Body() user: UpdateUserDto,
@@ -38,13 +41,15 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/profile')
+  @Get('profile')
+  @ApiBearerAuth()
   async getProfile(@Request() req): Promise<UserPublicDto> {
     return this.usersService.getProfile(req.user.id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/:userId')
+  @Get(':userId')
+  @ApiParam({ name: 'userId', type: Number })
   async get(
     @Param('userId', ParseIntPipe) userId: number,
   ): Promise<UserPublicDto> {

@@ -20,9 +20,6 @@ export class UserPublicDto extends CreateUserDto {
     this.createdAt = user.createdAt;
   }
   id: number;
-  field: {
-    id: number;
-    name: string;
-  };
+  field: FieldDto;
   createdAt: string;
 }

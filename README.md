@@ -45,6 +45,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## With Docker
+
+```bash
+$ docker compose up
 
 
 ## Support

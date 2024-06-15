@@ -1,12 +1,11 @@
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { INestApplication, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { FieldsModule } from './fields/fields.module';
 import { FieldsSeederService } from './fields/fields.seeder.service';
-import { setupSwagger } from './swagger.config';
 
 @Module({
   imports: [
@@ -28,12 +27,7 @@ import { setupSwagger } from './swagger.config';
   providers: [AppService],
 })
 export class AppModule {
-  constructor(
-    private readonly fieldsSeederService: FieldsSeederService,
-    // private readonly app: INestApplication,
-  ) {
-    // setupSwagger(this.app);
-  }
+  constructor(private readonly fieldsSeederService: FieldsSeederService) {}
 
   async onModuleInit() {
     await this.fieldsSeederService.seed();

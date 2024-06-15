@@ -77,16 +77,19 @@ export class UsersService {
     const whereClause: any = {};
 
     if (filterDto.name) {
-      whereClause.name = filterDto.name;
+      whereClause.name = {
+        [Op.iLike]: `%${filterDto.name}%`,
+      };
     }
     if (filterDto.surname) {
-      whereClause.surname = filterDto.surname;
+      whereClause.surname = {
+        [Op.iLike]: `%${filterDto.surname}%`,
+      };
     }
     if (filterDto.userType) {
       whereClause.type = filterDto.userType;
     }
     if (filterDto.registrationDate) {
-      console.log(filterDto.registrationDate);
       const startDate = moment(filterDto.registrationDate)
         .startOf('day')
         .toDate();
@@ -101,6 +104,7 @@ export class UsersService {
       where: whereClause,
       include: [{ model: Field, as: 'field' }],
     });
+
     return users.map(userToDto);
   }
 }
